@@ -25,15 +25,18 @@ async function run() {
             const services = await cursor.toArray();
             res.send(services);
         })
+        app.get('/', async (req, res) => {
+            const query = {}
+            const cursor = serviceCollection.find(query);
+            const service = await cursor.limit(3).toArray();
+            res.send(service);
+        })
     } finally {
 
     }
 }
 run().catch(error => console.error(error))
 
-app.get('/', (req, res) => {
-    res.send('simple server running');
-})
 
 app.listen(port, () => {
     console.log(`server running on ${port}`);

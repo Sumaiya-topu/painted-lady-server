@@ -51,6 +51,12 @@ async function run() {
             const query = { _id: ObjectId(id) };
             const review = await reviewCollection.findOne(query);
             res.send(review);
+        });
+
+        app.post('/services', async (req, res) => {
+            const service = req.body;
+            const result = await serviceCollection.insertOne(service);
+            res.send(result);
         })
         app.get('/review', async (req, res) => {
             const postId = req.query.postId;
@@ -82,6 +88,7 @@ async function run() {
             const id = req.params.id;
             const editedReviewText = req.body.editedReview;
             const query = { _id: ObjectId(id) };
+            console.log(query);
             const updatedDoc = {
                 $set: {
                     reviewText: editedReviewText
